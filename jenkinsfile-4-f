@@ -2,9 +2,9 @@ pipeline {
     agent any
 
     stages {
-        stage(Docker build) {
+        stage('git code') {
             steps {
-                echo 'DOCKER'
+                git branch: 'main', url: 'https://github.com/bayriradha/lms-public.git'
             }
         }
     }
