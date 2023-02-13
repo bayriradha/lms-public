@@ -1,0 +1,19 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('git code') {
+            steps {
+                git branch: 'main', url: 'https://github.com/bayriradha/lms-public.git'
+            }
+        }
+stage('Docker image') {
+            steps {
+                sh 'cd webapp && docker build -f Dockerfile -t di4front .'
+		sh 'docker container run -dt --name cont1 di4front'
+            }
+        }
+
+    }
+}
+
