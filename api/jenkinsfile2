@@ -7,5 +7,22 @@ pipeline {
                 sh'docker network create -d bridge mynetwork'
             }
         }
+
+stage('postgres db & container') {
+            steps {
+                sh'docker run -d -p 5432:5432 --network mynetwork -e POSTGRES_PASSWORD=radha.123 --name cont-backend postgres'
+            }
+        }
+
+stage('backend building & container') {
+            steps {
+		sh'docker run -p 8080:8080 --network mynetwork -e DATABASE_URL=postgresql://postgres:radha.123@cont-backend:5432/postgres -e PORT=8080 -e MODE=local img-b'        
+	
+            }
+        }
+
+
+
+
     }
 }
