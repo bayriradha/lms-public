@@ -2,9 +2,9 @@ pipeline {
     agent any
 
     stages {
-        stage('Hello') {
+        stage('creation of Docker network') {
             steps {
-                echo 'Hello World'
+                sh'docker network create -d bridge mynetwork'
             }
         }
     }
