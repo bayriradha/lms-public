@@ -4,23 +4,25 @@ pipeline {
     stages {
         stage('creation of Docker network') {
             steps {
-                sh'docker network rm mynetwork && docker network create -d bridge mynetwork'
+                sh'docker stop cont-backend && docker rm cont-backend'
+		sh'docker network rm mynetwork && docker network create -d bridge mynetwork'
             }
         }
 
 stage('postgres db & container') {
             steps {
-                sh'docker run -d -p 5432:5432 --network mynetwork -e POSTGRES_PASSWORD=radha.123 --name cont-backend postgres'
+                sh'docker rmi postgres'
+		sh'docker run -d -p 5432:5432 --network mynetwork -e POSTGRES_PASSWORD=radha.123 --name cont-backend postgres'
             }
         }
 
 stage('building Docker image-B') {
             steps {
-                sh'docker build -t img-b .'
+                sh'sh'docker rmi img-b'
+		sh'docker build -t img-b .'
+		
             }
         }
-
-
 
 stage('building docker container-B') {
             steps {
@@ -28,9 +30,5 @@ stage('building docker container-B') {
 	
             }
         }
-
-
-
-
     }
 }
