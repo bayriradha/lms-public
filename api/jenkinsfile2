@@ -19,6 +19,7 @@ stage('postgres db & container') {
 
 stage('building Docker image-B') {
             steps {
+		sh'docker rmi -f img-b
 		sh'cd api && docker build -t img-b .'
 		
             }
@@ -26,7 +27,7 @@ stage('building Docker image-B') {
 
 stage('building docker container-B') {
             steps {
-		sh'docker run -p 8080:8080 --network mynetwork -e DATABASE_URL=postgresql://postgres:radha.123@cont-backend:5432/postgres -e PORT=8080 -e MODE=local img-b'        
+		sh'docker run -d -p 8080:8080 --network mynetwork -e DATABASE_URL=postgresql://postgres:radha.123@cont-backend:5432/postgres --name backend -e PORT=8080 -e MODE=local img-b'        
 	
             }
         }
