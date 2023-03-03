@@ -4,7 +4,7 @@ pipeline {
     stages {
         stage('creation of Docker network') {
             steps {
-		sh'docker stop cont-backend && docker rm cont-backend'	
+		sh'docker stop cont-pg && docker rm cont-pg'	
 		sh'docker network rm mynetwork && docker network create -d bridge mynetwork'
             }
         }
