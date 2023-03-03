@@ -12,7 +12,7 @@ pipeline {
 stage('Building Docker container') {
             steps {
 		sh'docker stop cont-frontend && docker rm cont-frontend'
-		sh 'docker run -d -p 8080:80 --network mynetwork --name cont-frontend img-frontend'
+		sh 'docker run -d -p 8000:80 --network mynetwork --name cont-frontend img-frontend'
             }
         }
 
