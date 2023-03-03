@@ -4,8 +4,16 @@ pipeline {
     stages {
         stage('Building Docker image') {
             steps {
-                sh 'cd webapp && docker build -f Dockerfile -t img-frontend .'
+                sh 'docker rmi -f img-frontend'
+		sh 'cd webapp && docker build -f Dockerfile -t img-frontend .'
             }
         }
+
+stage('Building Docker container') {
+            steps {
+		sh 'docker run -d -p 8000:80 --network mynetwork --name cont-frontend img-frontend'
+            }
+        }
+
     }
 }
