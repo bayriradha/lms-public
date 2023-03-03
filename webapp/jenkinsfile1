@@ -5,7 +5,7 @@ pipeline {
         stage('Building Docker image') {
             steps {
                 sh 'docker rmi -f img-frontend'
-		sh 'cd webapp && docker build -f Dockerfile -t img-frontend .'
+		sh 'cd webapp && docker build -t img-frontend .'
             }
         }
 
