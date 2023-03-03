@@ -4,7 +4,7 @@ pipeline {
     stages {
 stage('postgres db & container') {
             steps {
-        	sh'docker rmi -f postgres'        
+        	sh'docker rmi -f postgres && docker stop cont-pg && docker rm cont-pg'        
 		sh'docker run -d -p 5432:5432 --network mynetwork -e POSTGRES_PASSWORD=radha.123 --name cont-pg postgres'
             }
         }
