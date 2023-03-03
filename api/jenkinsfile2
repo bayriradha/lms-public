@@ -12,7 +12,7 @@ pipeline {
 stage('postgres db & container') {
             steps {
         	sh'docker rmi -f postgres'        
-		sh'docker run -d -p 5432:5432 --network mynetwork -e POSTGRES_PASSWORD=radha.123 --name cont-backend postgres'
+		sh'docker run -d -p 5432:5432 --network mynetwork -e POSTGRES_PASSWORD=radha.123 --name cont-pg postgres'
             }
         }
 
@@ -26,7 +26,7 @@ stage('building Docker image-B') {
 
 stage('building docker container-B') {
             steps {
-		sh'docker run -d -p 8080:8080 --network mynetwork -e DATABASE_URL=postgresql://postgres:radha.123@cont-backend:5432/postgres --name backend -e PORT=8080 -e MODE=local img-b'        
+		sh'docker run -d -p 8080:8080 --network mynetwork -e DATABASE_URL=postgresql://postgres:radha.123@cont-pg:5432/postgres --name cont-backend -e PORT=8080 -e MODE=local img-b'        
 	
             }
         }
