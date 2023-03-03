@@ -11,7 +11,7 @@ stage('postgres db & container') {
 
 stage('building Docker image-B') {
             steps {
-		sh'docker rmi -f img-b'
+		sh'docker rmi -f img-b && docker stop cont-backend && docker rm cont-backend'
 		sh'cd api && docker build -t img-b .'
 		
             }
